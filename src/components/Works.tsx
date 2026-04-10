@@ -89,43 +89,49 @@ const works = [
 
 export default function Works() {
   return (
-    <section id="works" className="px-8 md:px-12 py-16 border-t border-border">
+    <section id="works" className="px-8 md:px-12 py-24">
       {/* Section Header */}
-      <div className="flex justify-between items-baseline mb-10">
-        <h2 className="font-serif text-[28px] font-light">近期作品</h2>
+      <div className="flex justify-between items-baseline mb-14">
+        <div>
+          <p className="text-[10px] tracking-[0.25em] uppercase text-text-tertiary mb-3">
+            Selected Works
+          </p>
+          <h2 className="font-serif text-3xl md:text-4xl font-light">近期作品</h2>
+        </div>
         <a
           href="#"
-          className="text-[11px] tracking-[0.12em] uppercase text-text-secondary border-b border-border-secondary pb-px hover:text-text transition-colors duration-300 cursor-pointer"
+          className="text-[11px] tracking-[0.15em] uppercase text-text-secondary border-b border-border-secondary pb-1 hover:text-text hover:border-text transition-colors duration-300 cursor-pointer"
         >
-          全部作品 →
+          全部作品
         </a>
       </div>
 
       {/* Works Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1.5px] bg-border">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-border">
         {works.map((work) => (
           <div
             key={work.title}
             className="bg-bg aspect-square relative overflow-hidden cursor-pointer group"
           >
+            {/* Image with scale on hover */}
             <svg
               viewBox="0 0 300 300"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full block"
+              className="w-full h-full block transition-transform duration-700 ease-out group-hover:scale-105"
             >
               <rect width="300" height="300" fill={work.bg} />
               {work.svg}
             </svg>
 
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-92 transition-opacity duration-300 flex flex-col justify-end p-5">
-              <span className="inline-block self-start text-[10px] tracking-[0.1em] uppercase border border-border-secondary px-2 py-0.5 rounded-sm text-text-secondary mb-1.5">
+            {/* Info overlay — fades in from bottom */}
+            <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/50 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+              <span className="inline-block text-[10px] tracking-[0.15em] uppercase text-white/70 mb-1">
                 {work.tag}
               </span>
-              <div className="font-serif text-base font-light mb-1">
+              <div className="font-serif text-base font-light text-white mb-0.5">
                 {work.title}
               </div>
-              <div className="text-[11px] text-text-secondary">{work.meta}</div>
+              <div className="text-[11px] text-white/60">{work.meta}</div>
             </div>
           </div>
         ))}

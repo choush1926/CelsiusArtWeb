@@ -4,9 +4,9 @@ import { useChat } from "@ai-sdk/react";
 import { useState, useRef, useEffect } from "react";
 
 const suggestions = [
-  "想了解 Sam 的創作理念",
+  "想了解 Celsius 的創作理念",
   "有哪些課程可以報名？",
-  "我想看羊毛氈作品",
+  "想看陶藝或羊毛氈作品",
 ];
 
 function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; content?: string }) {
@@ -24,11 +24,11 @@ export default function AiChat() {
     messages: [
       {
         id: "welcome",
-        role: "assistant",
+        role: "assistant" as const,
         content: "你好！我可以幫你找作品、介紹課程，或聊聊任何你感興趣的事。想從哪裡開始？",
         parts: [{ type: "text" as const, text: "你好！我可以幫你找作品、介紹課程，或聊聊任何你感興趣的事。想從哪裡開始？" }],
       },
-    ],
+    ] as never,
     onError: (err) => {
       console.error("Chat error:", err);
     },
@@ -53,14 +53,15 @@ export default function AiChat() {
   return (
     <section
       id="contact"
-      className="border-t border-border grid grid-cols-1 md:grid-cols-2"
+      className="py-24 px-8 md:px-12"
     >
+      <div className="grid grid-cols-1 md:grid-cols-2 border border-border">
       {/* Left: Intro */}
-      <div className="flex flex-col justify-center px-8 md:px-12 py-12 md:border-r border-border">
-        <p className="text-[10px] tracking-[0.2em] uppercase text-text-tertiary mb-4">
-          智能助理
+      <div className="flex flex-col justify-center px-8 md:px-12 py-12 md:border-r border-border bg-bg">
+        <p className="text-[10px] tracking-[0.25em] uppercase text-text-tertiary mb-4">
+          Personal Concierge
         </p>
-        <h2 className="font-serif text-[26px] font-light leading-[1.3] mb-4">
+        <h2 className="font-serif text-[28px] md:text-3xl font-light leading-[1.3] mb-4">
           讓我幫你找到
           <br />
           最適合的作品
@@ -79,12 +80,13 @@ export default function AiChat() {
         >
           {messages.map((msg) => {
             const text = getMessageText(msg);
-            if (!text && msg.role === "assistant") return null;
+            const isUser = msg.role === "user";
+            if (!text && !isUser) return null;
             return (
               <div
                 key={msg.id}
                 className={`max-w-[85%] px-4 py-3 text-[13px] leading-[1.6] bg-white border border-border ${
-                  msg.role === "user"
+                  isUser
                     ? "self-end rounded-xl rounded-br-sm"
                     : "self-start rounded-xl rounded-tl-sm"
                 }`}
@@ -151,6 +153,7 @@ export default function AiChat() {
             </svg>
           </button>
         </form>
+      </div>
       </div>
     </section>
   );

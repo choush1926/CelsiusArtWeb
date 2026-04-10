@@ -1,24 +1,31 @@
 const socialLinks = [
   { label: "Instagram", href: "#" },
   { label: "Threads", href: "#" },
-  { label: "聯絡合作", href: "#contact" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border px-8 md:px-12 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-text-tertiary">
-      <span>© 2025 Sam · 林山姆</span>
-      <div className="flex gap-8">
+    <footer className="px-8 md:px-12 py-16 text-center">
+      <div className="mb-6">
+        <span className="font-serif text-sm tracking-[0.25em] uppercase text-text">
+          Celsius Art
+        </span>
+      </div>
+      <div className="flex justify-center gap-8 mb-8">
         {socialLinks.map(({ label, href }) => (
           <a
             key={label}
             href={href}
-            className="hover:text-text transition-colors duration-300"
+            className="text-[11px] tracking-[0.15em] uppercase text-text-tertiary hover:text-text transition-colors duration-300"
           >
             {label}
           </a>
         ))}
       </div>
+      <div className="w-12 h-px bg-border mx-auto mb-6" />
+      <span className="text-[10px] tracking-[0.1em] text-text-tertiary">
+        © 2025 Celsius Art
+      </span>
     </footer>
   );
 }

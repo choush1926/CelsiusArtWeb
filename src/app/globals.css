@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --text: #1a1a1a;
-  --text-secondary: #6b6b6b;
-  --text-tertiary: #9e9e9e;
-  --bg: #ffffff;
-  --bg-secondary: #f7f5f2;
-  --border: rgba(0, 0, 0, 0.12);
-  --border-secondary: rgba(0, 0, 0, 0.2);
+  --text: #2c2824;
+  --text-secondary: #6b6560;
+  --text-tertiary: #9e9590;
+  --bg: #faf8f5;
+  --bg-secondary: #f3efe9;
+  --bg-dark: #2c2824;
+  --border: rgba(44, 40, 36, 0.08);
+  --border-secondary: rgba(44, 40, 36, 0.15);
+  --accent: #8b7355;
 }
 
 @theme inline {
@@ -16,9 +18,11 @@
   --color-text-tertiary: var(--text-tertiary);
   --color-bg: var(--bg);
   --color-bg-secondary: var(--bg-secondary);
+  --color-bg-dark: var(--bg-dark);
   --color-border: var(--border);
   --color-border-secondary: var(--border-secondary);
-  --font-serif: "Cormorant Garamond", serif;
+  --color-accent: var(--accent);
+  --font-serif: "Noto Serif TC", "Cormorant Garamond", serif;
   --font-sans: "DM Sans", sans-serif;
 }
 
@@ -29,6 +33,10 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 /* Luxury animations */
@@ -43,8 +51,32 @@ body {
   }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.8s ease-out forwards;
 }
 
 .animation-delay-200 {
@@ -60,4 +92,27 @@ body {
 .animation-delay-600 {
   animation-delay: 0.6s;
   opacity: 0;
+}
+
+.animation-delay-800 {
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Selection */
+::selection {
+  background: rgba(139, 115, 85, 0.15);
+  color: var(--text);
 }
