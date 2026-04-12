@@ -111,6 +111,16 @@ html {
   transform: translateY(0);
 }
 
+/* Artwork warm tone effect */
+.artwork-warm {
+  filter: saturate(0.7) sepia(0.08) contrast(1.05) brightness(1.02);
+  transition: filter 0.7s ease-out;
+}
+
+.group:hover .artwork-warm {
+  filter: saturate(1.1) sepia(0) contrast(1) brightness(1);
+}
+
 /* Selection */
 ::selection {
   background: rgba(139, 115, 85, 0.15);
