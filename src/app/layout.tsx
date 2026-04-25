@@ -22,6 +22,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.celsiusart.com"),
   title: "Celsius Art | 攝氏藝術 — 跨媒材藝術創作",
   description:
     "橫跨油畫、裝置、陶藝與羊毛氈的跨媒材創作。關注物質與空間之間的臨界狀態。",
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     description: "跨媒材藝術創作 — 物質的詩意",
     locale: "zh_TW",
     type: "website",
+    url: "https://www.celsiusart.com",
   },
 };
 
