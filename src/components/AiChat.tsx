@@ -20,6 +20,7 @@ function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; c
 }
 
 export default function AiChat() {
+  const [open, setOpen] = useState(false);
   const { messages, sendMessage, status, error } = useChat({
     messages: [
       {
@@ -51,33 +52,49 @@ export default function AiChat() {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-24 px-8 md:px-12"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 border border-border">
-      {/* Left: Intro */}
-      <div className="flex flex-col justify-center px-8 md:px-12 py-12 md:border-r border-border bg-bg">
-        <p className="text-[10px] tracking-[0.25em] uppercase text-text-tertiary mb-4">
-          Personal Concierge
-        </p>
-        <h2 className="font-serif text-[28px] md:text-3xl font-light leading-[1.3] mb-4">
-          讓我幫你找到
-          <br />
-          最適合的作品
-        </h2>
-        <p className="text-[13px] leading-[1.8] text-text-secondary">
-          不知道從哪裡開始？直接問我。無論是想選購作品、報名課程，還是純粹想了解某件作品的創作脈絡，我都可以幫你。
-        </p>
-      </div>
+    <>
+      {/* Floating Button */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="fixed z-40 bottom-6 right-6 md:bottom-8 md:right-8 w-14 h-14 rounded-full bg-text text-white shadow-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center cursor-pointer"
+        aria-label={open ? "關閉助理" : "開啟助理"}
+      >
+        {open ? (
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M3 3l12 12M15 3L3 15" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        ) : (
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+              stroke="white"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
+      </button>
 
-      {/* Right: Chat Window */}
-      <div className="bg-bg-secondary px-6 py-8 flex flex-col min-h-[400px]">
+      {/* Chat Panel */}
+      <div
+        id="contact"
+        className={`fixed z-30 bottom-24 right-4 md:right-8 w-[calc(100vw-2rem)] md:w-[400px] h-[min(560px,calc(100vh-8rem))] bg-bg border border-border shadow-2xl flex flex-col transition-all duration-300 origin-bottom-right ${
+          open
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
+      >
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-border bg-bg-secondary">
+          <p className="text-[10px] tracking-[0.25em] uppercase text-text-tertiary mb-1">
+            Personal Concierge
+          </p>
+          <h3 className="font-serif text-base font-light text-text">Celsius 的助理</h3>
+        </div>
+
         {/* Messages */}
-        <div
-          ref={scrollRef}
-          className="flex-1 flex flex-col gap-4 overflow-y-auto mb-4"
-        >
+        <div ref={scrollRef} className="flex-1 flex flex-col gap-3 overflow-y-auto px-5 py-5 bg-bg-secondary/50">
           {messages.map((msg) => {
             const text = getMessageText(msg);
             const isUser = msg.role === "user";
@@ -109,7 +126,7 @@ export default function AiChat() {
 
         {/* Suggestions - only show at start */}
         {messages.length <= 1 && (
-          <div className="flex gap-2 flex-wrap mb-4">
+          <div className="flex gap-2 flex-wrap px-5 pb-3 bg-bg-secondary/50">
             {suggestions.map((s) => (
               <button
                 key={s}
@@ -128,7 +145,7 @@ export default function AiChat() {
             e.preventDefault();
             handleSend(input);
           }}
-          className="flex gap-2 border-t border-border pt-4"
+          className="flex gap-2 px-4 py-4 border-t border-border bg-bg"
         >
           <input
             value={input}
@@ -140,7 +157,7 @@ export default function AiChat() {
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="w-8 h-8 rounded-full bg-text flex items-center justify-center shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300 disabled:opacity-30"
+            className="w-9 h-9 rounded-full bg-text flex items-center justify-center shrink-0 cursor-pointer hover:opacity-80 transition-opacity duration-300 disabled:opacity-30"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
@@ -154,7 +171,6 @@ export default function AiChat() {
           </button>
         </form>
       </div>
-      </div>
-    </section>
+    </>
   );
 }
